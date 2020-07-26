@@ -1,4 +1,4 @@
-# poller
+# VixDigitalApplication
 VixDigitalApplication has been built using JAVA 8,Spring boot (4.3.2), microservices,Postgresql as the backend.
 
 The application has 2 services 
@@ -6,16 +6,16 @@ The application has 2 services
 2. VixService
 
 
-   HTTPPollerService polls the vix.digital after using a scheduled executor after every 10 minutes and fetches the response from the site.
+   - HTTPPollerService polls the vix.digital after using a scheduled executor after every 10 minutes and fetches the response from the site.
    The service response parameters fetched - such as statusCode, message, responseTimeInMilliseconds is then persisted to the database table - service_info.
    
    In case the response code received is not 200 or if the response time in milliseconds exceeds 200 milliseconds , a warning message is logged in the console.
    
-   VixService
+   - VixService
    REST API built which lets a user to add / update / delete a service.
    
     a. To fetch the details of a service - service name, description, id etc 
-       GET request - localhost:6162/services 
+       GET request - localhost:6162/services
     b. Service can be added using a POST request to the URL - localhost:6162/services
     c. Service can be updated my making a PUT request to the URL- localhost:6162/services
     d. Service can be deleted by making a DELETE request to the URL - localhost:6162/services
