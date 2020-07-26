@@ -14,11 +14,11 @@ The application has 2 services
    - VixService
    REST API built which lets a user to add / update / delete a service.
    
-    a. To fetch the details of a service - service name, description, id etc 
+    - To fetch the details of a service - service name, description, id etc 
        GET request - localhost:6162/services
-    b. Service can be added using a POST request to the URL - localhost:6162/services
-    c. Service can be updated my making a PUT request to the URL- localhost:6162/services
-    d. Service can be deleted by making a DELETE request to the URL - localhost:6162/services
+    - Service can be added using a POST request to the URL - localhost:6162/services
+    - Service can be updated my making a PUT request to the URL- localhost:6162/services
+    - Service can be deleted by making a DELETE request to the URL - localhost:6162/services
     
     To change the port number (in case 8185 is already used on your machine, kindly change it in application.properties file)
 
