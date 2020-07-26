@@ -55,7 +55,7 @@ public class HttpPollerService implements Runnable{
     public void run() {
         try {
             ServiceInfo serviceInfo = this.getServiceStatus();
-            saveServiceStatusInfo(serviceInfo);
+            this.saveServiceStatusInfo(serviceInfo);
             if(serviceInfo.getResponseTimeInMillis() > 200)
                 log.warn("The service is taking too long to respond");
 
@@ -64,7 +64,7 @@ public class HttpPollerService implements Runnable{
 
 
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error while accessing the service" ,e);
         }
     }
 
