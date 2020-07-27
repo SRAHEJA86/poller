@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 @ConfigurationProperties(prefix="endpoint")
@@ -26,14 +25,14 @@ public class HttpPollerService implements Runnable{
     OkHttpClient client = new OkHttpClient();
 
     @Value("${endpoint.url}")
-    private String url ="https://vix.digital";
+    String url ;
 
     private static final Logger log = LoggerFactory.getLogger(HttpPollerService.class);
 
     /**
      * Use OKHttp to send GET API poll request
      */
-    public ServiceInfo getServiceStatus() throws IOException {
+    public ServiceInfo getServiceStatus(String url) throws IOException {
             Request request = new Request.Builder().url(url).build();
             Response response = client.newCall(request).execute();
             serviceInfo = new ServiceInfo(response.code(),
@@ -54,7 +53,7 @@ public class HttpPollerService implements Runnable{
     @Override
     public void run() {
         try {
-            ServiceInfo serviceInfo = this.getServiceStatus();
+            ServiceInfo serviceInfo = this.getServiceStatus(url);
             this.saveServiceStatusInfo(serviceInfo);
             if(serviceInfo.getResponseTimeInMillis() > 200)
                 log.warn("The service is taking too long to respond");

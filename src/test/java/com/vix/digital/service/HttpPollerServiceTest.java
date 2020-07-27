@@ -1,11 +1,14 @@
 package com.vix.digital.service;
 
+import com.sun.istack.internal.logging.Logger;
 import com.vix.digital.model.ServiceInfo;
 import com.vix.digital.repository.ServiceInfoRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -21,10 +24,13 @@ class HttpPollerServiceTest {
     @Autowired
     ServiceInfoRepository serviceInfoRepository;
 
+    @Value("${endpoint.url}")
+    String url;
+
     @Test
     public void test_the_service_params() throws IOException {
         HttpPollerService poller = new HttpPollerService();
-        ServiceInfo serviceInfo = poller.getServiceStatus();
+        ServiceInfo serviceInfo = poller.getServiceStatus(url);
         Assert.assertNotNull(serviceInfo);
         Assert.assertEquals(200,serviceInfo.getStatusCode());
         Assert.assertEquals("OK",serviceInfo.getMessage());
@@ -40,7 +46,10 @@ class HttpPollerServiceTest {
     }
 
     @Test
-    void test_when_error_in_service_response(){
+    void test_when_error_in_service_response() throws IOException {
+        HttpPollerService poller = Mockito.mock(HttpPollerService.class);
+        Mockito.when(poller.getServiceStatus(url)).thenThrow(IOException.class);
+        Logger logger = Logger.getLogger(HttpPollerService.class);
 
     }
 
